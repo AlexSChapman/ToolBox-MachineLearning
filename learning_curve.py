@@ -5,6 +5,7 @@ import numpy
 from sklearn.datasets import *
 from sklearn.cross_validation import train_test_split
 from sklearn.linear_model import LogisticRegression
+from statistics import mean
 
 
 def display_digits():
@@ -20,7 +21,7 @@ def display_digits():
 
 def train_model():
     data = load_digits()
-    num_trials = 10
+    num_trials = 50
     train_percentages = range(5, 95, 5)
     test_accuracies = numpy.zeros(len(train_percentages))
 
@@ -30,9 +31,26 @@ def train_model():
     # variability.
     # For consistency with the previous example use
     # model = LogisticRegression(C=10**-10) for your learner
+    model = LogisticRegression(C=1**-4)
 
-    # TODO: your code here
-
+    train_percentages = []
+    test_accuracies = []
+    for test_percentage in range(5, 90):
+        test_percentage = test_percentage / 100.0
+        train_percentages.append(test_percentage)
+        avg_train = []
+        avg_run = []
+        for i in range(num_trials):
+            X_train, X_test, y_train, y_test = train_test_split(data.data,
+                                                                data.target,
+                                                                train_size=test_percentage
+                                                                )
+            model.fit(X_train, y_train)
+            avg_train.append(model.score(X_train, y_train))
+            avg_run.append(model.score(X_test, y_test))
+        test_accuracies.append(mean(avg_run))
+    print(test_accuracies)
+    print(train_percentages)
     fig = plt.figure()
     plt.plot(train_percentages, test_accuracies)
     plt.xlabel('Percentage of Data Used for Training')
@@ -42,5 +60,5 @@ def train_model():
 
 if __name__ == "__main__":
     # Feel free to comment/uncomment as needed
-    display_digits()
-    # train_model()
+    # display_digits()
+    train_model()

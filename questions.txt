@@ -1,0 +1,10 @@
+1. It is an almost linearly increasing line, with a slight downwards trend on its slope. 
+
+
+2. The last section seemed to be the noisiest. This would make sense as the individual cases of the images would begin to matter more and more as the number tested decreased. Likewise the begining seemed to be more noisy, likely for the opposite reason. 
+
+
+3. I ran it with 50 trials and that seemed relatively smooth, it seemed to be nearing an asymptote, as the smoothness was decreasing at a decreasing rate as the number of trials was increased beyond this. 
+
+
+4. By reducing the value of c I was able to get a much sharper learning curve, with the machine reaching 92% accuracy with just 15% of data used in training. 
